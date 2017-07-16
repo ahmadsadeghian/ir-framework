@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot} from "@angular/router";
-import {Principal} from "./principal.service";
 import {StateStorageService} from "./state-storage.service";
 import {AuthService} from "../../auth.service";
 
@@ -26,14 +25,13 @@ export class UserRouteAccessService implements CanActivate, CanActivateChild {
             return true;
         }
 
-        this.authService.get().subscribe(result => {
-            if (result.status == 200)
-                return true;
-            else {
+        return this.authService.get().toPromise().then(account => {
+            return true;
+        }).catch(e => {
                 this.stateStorageService.storeUrl(state.url);
                 this.router.navigate(['/login']);
                 return false;
             }
-        });
+        );
     }
 }
