@@ -1,0 +1,17 @@
+<select attr.data-placeholder="{{getPlaceHolder()}}" >
+    <option value=""></option>
+    <ng-container *ngIf="dataGroupFiled == null">
+        <option
+                *ngFor="let item of list" [value]="item[dataValueField]">
+            {{item[dataTextField]}}
+        </option>
+    </ng-container>
+    <ng-container *ngIf="dataGroupFiled != null">
+        <optgroup *ngFor="let group of list"
+                  label="{{group.groupKey}}">
+            <option *ngFor="let item of group.items" [value]="item[dataValueField]">
+                {{item[dataTextField]}}
+            </option>
+        </optgroup>
+    </ng-container>
+</select>

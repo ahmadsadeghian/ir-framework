@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+/*——————  font- web-yar.ir —————— */
+@font-face {
+    font-family: "yekan";
+    src: url(./assets/fonts/Yekan.eot);
+    src: url(./assets/fonts/Yekan.eot?#iefix) format("embedded-opentype"), url(./assets/fonts/Yekan.woff) format("woff"), url(./assets/fonts/Yekan.ttf) format("truetype"), url(./assets/fonts/Yekan.svg#BYekan) format("svg");
+    font-weight: normal;
+    font-style: normal
+}
+
+*:not(.fa) {
+    font-family: 'yekan', 'Roboto' !important;
+}
+
+.chosen-container {
+    width: 100% !important;
+}

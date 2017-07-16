@@ -1,0 +1,144 @@
+<div style="direction: ltr">
+    <div class="btn-group pull-left ">
+        <div *ngFor="let c of globalCommands">
+            <button (click)="handleGlobalCommand(c)"
+                    style="color: white; margin: 10px;"
+                    class="btn bg-info">
+                <span class="{{c.icon}}"></span>
+                <span>{{c.title}}</span>
+            </button>
+        </div>
+    </div>
+
+    <table class="table table-striped" style="text-align: right;">
+        <thead>
+        <tr class="bg-primary" style="color: white;">
+            <th *ngIf="rowCommands.length > 0"
+                style="width: 50px;" class="text-center">
+                <div *ngIf="config.selectMode == SINGLE_SELECT">
+                    عملیات
+                </div>
+                <div *ngIf="config.selectMode == MULTI_SELECT"
+                     class="col-sm-4 col-6 col-lg-4 col-md-6 button-wrapper">
+                    <div class="btn-group " ngbDropdown>
+                        <button type="button"
+                                class="btn btn-default btn-md"
+                                ngbDropdownToggle>
+                            <span class="fa fa-cog"></span>
+                        </button>
+                        <ul class="dropdown-menu zindex-popover"
+                            style="direction: rtl; text-align: right;">
+                            <li class="dropdown-item"
+                                *ngFor="let c of rowCommands">
+                                <a href="#" ng-click="handleCommand(c)">
+                                    <span class="{{c.icon}}"></span>
+                                    {{c.title}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </th>
+            <th *ngFor="let column of reversedColumns"
+                class="text-right">
+                {{column.title}}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items; let i = index;">
+            <td *ngIf="rowCommands.length > 0"
+                style="width: 50px;" class="text-center">
+                <input type="checkbox"
+                       name="grid-command"
+                       [checked]="isRowChecked(item)"
+                       (click)="onSelectRowChanged(item)"
+                       *ngIf="config.selectMode == MULTI_SELECT"/>
+
+                <div *ngIf="config.selectMode == SINGLE_SELECT"
+                     class="btn-group " ngbDropdown>
+                    <button type="button" class="btn btn-default btn-md" ngbDropdownToggle>
+                        <span class="fa fa-cog"></span>
+                    </button>
+                    <ul class="dropdown-menu zindex-popover"
+                        style="direction: rtl; text-align: right;">
+                        <li class="dropdown-item"
+                            (click)="handleCommand(c, item)"
+                            *ngFor="let c of rowCommands">
+                                                <span style="cursor: pointer;">
+                                                    <span style="font-size: medium;" class="{{c.icon}}"></span>
+                                                    {{c.title}}
+                                                </span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td *ngFor="let c of reversedColumns;">
+                <span *ngIf="!c.isRowIndex">{{item[c.name]}}</span>
+                <span *ngIf="c.isRowIndex">{{getRowIndex(i)}}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped">
+        <tfoot>
+        <tr>
+            <td colspan="1">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <button (click)="gotoPage(gridQuery.pageable.page - 1)"
+                                [disabled]="gridQuery.pageable.page <= 0"
+                                class="btn btn-primary"
+                                style="cursor: pointer">
+                            <i class="fa fa-arrow-left"></i>
+                        </button>
+                    </li>
+                    <li class="page-item disabled" style="width: 70px;text-align:right;">
+                        <button class="btn btn-default">
+                            <span>{{gridQuery.pageable.page + 1}}</span>
+                            <span> / </span>
+                            <span>{{gridQuery.numberOfPages}}</span>
+                        </button>
+                    </li>
+                    <li class="page-item disabled text-center" style="width: 100px;">
+                        <button class="btn btn-default">
+                            <span>تعداد:</span>
+                            <span>{{this.gridQuery.total}}</span>
+                        </button>
+                    </li>
+
+                    <li class="page-item">
+                        <button (click)="gotoPage(gridQuery.pageable.page + 1)"
+                                [disabled]="gridQuery.pageable.page >= gridQuery.numberOfPages - 1"
+                                class="btn btn-primary"
+                                style="cursor: pointer">
+                            <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </td>
+            <td [colSpan]="columnsCount">
+                <ul class="pagination pull-right float-sm-right">
+                    <li [ngClass]="{'active': gridQuery.pageable.size == 5}"
+                        class="page-item" (click)="setPageSize(5)">
+                        <a class="page-link" style="cursor: pointer">5</a>
+                    </li>
+                    <li [ngClass]="{'active': gridQuery.pageable.size == 10}"
+                        class="page-item" (click)="setPageSize(10)">
+                        <a class="page-link" style="cursor: pointer">10</a>
+                    </li>
+                    <li [ngClass]="{'active': gridQuery.pageable.size == 20}"
+                        class="page-item" (click)="setPageSize(20)">
+                        <a class="page-link" style="cursor: pointer">20</a>
+                    </li>
+
+                    <li [ngClass]="{'active': gridQuery.pageable.size == 50}"
+                        class="page-item" (click)="setPageSize(50)">
+                        <a class="page-link" style="cursor: pointer">50</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
