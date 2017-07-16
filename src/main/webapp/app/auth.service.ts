@@ -47,7 +47,8 @@ export class AuthService {
 
     logout(): Observable<boolean> {
         return this.http.post('api/logout', {}).map(result => {
-            console.log(result.status == 200);
+            this.get().subscribe(() => {
+            });
             if (result.status == 200) {
                 this.isLoggedIn = false;
                 this.username = null;
