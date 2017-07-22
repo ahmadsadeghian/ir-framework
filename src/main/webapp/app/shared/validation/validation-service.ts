@@ -42,12 +42,24 @@ export class ValidationService {
     }
 
     public isValid(): boolean {
-        this.validate();
         return this.formGroup.valid;
     }
 
     public isFieldInvalid(fieldName): boolean {
-        return !this.formGroup.controls[fieldName].valid &&
-            (this.formGroup.controls[fieldName].dirty || this.formGroup.controls[fieldName].touched);
+        return !this.formGroup.controls[fieldName].valid;
+    }
+
+    public getInputClass(fieldName): string {
+        if (this.isFieldInvalid(fieldName))
+            return 'has-feedback has-error';
+        else
+            return 'has-feedback has-success'
+    }
+
+    public getInputIcon(fieldName): string {
+        if (this.isFieldInvalid(fieldName))
+            return 'ion-android-cancel form-control-feedback';
+        else
+            return 'ion-checkmark-circled form-control-feedback';
     }
 }

@@ -1,9 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {User} from "./user-model";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserManagementService} from "./user-management.service";
 import {ValidationService} from "../../../shared/validation/validation-service";
-
 
 @Component({
     templateUrl: './user-form.html',
@@ -27,12 +26,6 @@ export class UserFormComponent implements OnInit {
             'passwordRepeat': [this.model.passwordRepeat, Validators.required]
         });
         this.validationService = new ValidationService(this.userForm);
-    }
-
-
-    private customValidator(control: FormControl) {
-        // check if control is equal to the password1 control
-        return {isEqual: control.value === this.userForm.controls['password'].value};
     }
 
     onSubmit(): void {
