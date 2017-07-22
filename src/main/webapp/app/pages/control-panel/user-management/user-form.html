@@ -1,40 +1,95 @@
-<div class="form-group has-success">
-    <label class="control-label" for="inputSuccess1">Input with success</label>
-    <input type="text" class="form-control" id="inputSuccess1">
-</div>
-<div class="form-group has-warning">
-    <label class="control-label" for="inputWarning1">Input with warning</label>
-    <input type="text" class="form-control" id="inputWarning1">
-</div>
-<div class="form-group has-error">
-    <label class="control-label" for="inputError1">Input with error</label>
-    <input type="text" class="form-control" id="inputError1">
-</div>
+<div style="direction: rtl">
+    <ba-card title="فرم اطلاعات کاربر">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
-<div class="form-group has-success has-feedback">
-    <label class="control-label" for="inputSuccess2">Input with success</label>
-    <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status">
-    <i class="ion-checkmark-circled form-control-feedback" aria-hidden="true"></i>
-    <span id="inputSuccess2Status" class="sr-only">(success)</span>
-</div>
-<div class="form-group has-warning has-feedback">
-    <label class="control-label" for="inputWarning2">Input with warning</label>
-    <input type="text" class="form-control" id="inputWarning2" aria-describedby="inputWarning2Status">
-    <i class="ion-alert-circled form-control-feedback" aria-hidden="true"></i>
-    <span id="inputWarning2Status" class="sr-only">(warning)</span>
-</div>
-<div class="form-group has-error has-feedback">
-    <label class="control-label" for="inputError2">Input with error</label>
-    <input type="text" class="form-control" id="inputError2" aria-describedby="inputError2Status">
-    <i class="ion-android-cancel form-control-feedback" aria-hidden="true"></i>
-    <span id="inputError2Status" class="sr-only">(error)</span>
-</div>
-<div class="form-group has-success has-feedback">
-    <label class="control-label" for="inputGroupSuccess1">Input group with success</label>
-    <div class="input-group">
-        <span class="input-group-addon addon-left">@</span>
-        <input type="text" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status">
-    </div>
-    <i class="ion-checkmark-circled form-control-feedback" aria-hidden="true"></i>
-    <span id="inputGroupSuccess1Status" class="sr-only">(success)</span>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">نام</label>
+                <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="نام"
+                           formControlName="firstName">
+                    <div *ngIf="validationService.isFieldInvalid('firstName')"
+                         class="alert alert-danger">
+                        <div [innerHTML]="validationService.getMessage('firstName')"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">نام خانوادگی</label>
+                <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="نام خانوادگی"
+                           formControlName="lastName">
+                    <div *ngIf="validationService.isFieldInvalid('lastName')" class="alert alert-danger">
+                        <div [innerHTML]="validationService.getMessage('lastName')"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">نام کاربری</label>
+                <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="نام کاربری"
+                           formControlName="login">
+                    <div *ngIf="validationService.isFieldInvalid('login')" class="alert alert-danger">
+                        <div [innerHTML]="validationService.getMessage('login')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">رمز عبور</label>
+                <div class="col-sm-10">
+                    <input type="password"
+                           class="form-control"
+                           placeholder="رمز عبور"
+                           formControlName="password">
+                    <div *ngIf="validationService.isFieldInvalid('password')" class="alert alert-danger">
+                        <div [innerHTML]="validationService.getMessage('password')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">تکرار رمز عبور</label>
+                <div class="col-sm-10">
+                    <input type="password"
+                           class="form-control"
+                           placeholder="تکرار رمز عبور"
+                           formControlName="passwordRepeat">
+                    <div *ngIf="validationService.isFieldInvalid('passwordRepeat')" class="alert alert-danger">
+                        <div [innerHTML]="validationService.getMessage('passwordRepeat')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">پست الکترونیکی</label>
+                <div class="col-sm-10">
+                    <input type="email"
+                           class="form-control"
+                           placeholder="پست الکترونیکی"
+                           formControlName="email">
+                    <div *ngIf="validationService.isFieldInvalid('email')" class="alert alert-danger">
+                        <div [innerHTML]="validationService.getMessage('email')"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="offset-sm-2 col-sm-10">
+                    <button type="submit" class="btn btn-warning">ثبت نام</button>
+                </div>
+            </div>
+
+        </form>
+
+
+    </ba-card>
 </div>

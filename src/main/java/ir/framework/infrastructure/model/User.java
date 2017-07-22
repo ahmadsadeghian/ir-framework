@@ -4,7 +4,6 @@ import ir.framework.base.model.AbstractAuditingEntity;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -45,21 +44,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(nullable = false)
     private boolean activated = false;
 
-    @Column(name = "lang_key", length = 5)
-    private String langKey;
-
     @Column(name = "image_url", length = 256)
     private String imageUrl;
-
-    @Size(max = 20)
-    @Column(name = "activation_key", length = 20)
-    private String activationKey;
-
-    @Column(name = "reset_key", length = 20)
-    private String resetKey;
-
-    @Column(name = "reset_date")
-    private ZonedDateTime resetDate = null;
 
     @ManyToMany
     @JoinTable(
@@ -136,13 +122,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.activated = activated;
     }
 
-    public String getLangKey() {
-        return langKey;
-    }
-
-    public void setLangKey(String langKey) {
-        this.langKey = langKey;
-    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -152,29 +131,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public String getActivationKey() {
-        return activationKey;
-    }
-
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
-
-    public String getResetKey() {
-        return resetKey;
-    }
-
-    public void setResetKey(String resetKey) {
-        this.resetKey = resetKey;
-    }
-
-    public ZonedDateTime getResetDate() {
-        return resetDate;
-    }
-
-    public void setResetDate(ZonedDateTime resetDate) {
-        this.resetDate = resetDate;
-    }
 
     public Set<Authority> getAuthorities() {
         return authorities;

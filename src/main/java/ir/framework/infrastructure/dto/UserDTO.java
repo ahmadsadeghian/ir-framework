@@ -36,9 +36,6 @@ public class UserDTO extends GenericDto {
 
     private boolean activated = false;
 
-    @Size(min = 2, max = 5)
-    private String langKey;
-
     private String createdBy;
 
     private ZonedDateTime createdDate;
@@ -50,18 +47,17 @@ public class UserDTO extends GenericDto {
     private Set<String> authorities;
 
     public UserDTO() {
-        // Empty constructor needed for MapStruct.
     }
 
     public UserDTO(User user) {
         this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
-                user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
+                user.getEmail(), user.getActivated(), user.getImageUrl(),
                 user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
                 user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()));
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,
-                   String email, boolean activated, String imageUrl, String langKey,
+                   String email, boolean activated, String imageUrl,
                    String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate,
                    Set<String> authorities) {
 
@@ -72,7 +68,6 @@ public class UserDTO extends GenericDto {
         this.email = email;
         this.activated = activated;
         this.imageUrl = imageUrl;
-        this.langKey = langKey;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
         this.lastModifiedBy = lastModifiedBy;
@@ -116,10 +111,6 @@ public class UserDTO extends GenericDto {
         return activated;
     }
 
-    public String getLangKey() {
-        return langKey;
-    }
-
     public String getCreatedBy() {
         return createdBy;
     }
@@ -153,7 +144,6 @@ public class UserDTO extends GenericDto {
                 ", email='" + email + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", activated=" + activated +
-                ", langKey='" + langKey + '\'' +
                 ", createdBy=" + createdBy +
                 ", createdDate=" + createdDate +
                 ", lastModifiedBy='" + lastModifiedBy + '\'' +

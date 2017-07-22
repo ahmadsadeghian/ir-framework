@@ -11,6 +11,7 @@ import {UserManagementComponent} from "./user-management/user-management.compone
 import {UserSearchComponent} from "./user-management/user-search.component";
 import {EventBroadcaster} from "../../widget/grid/grid-event-broadcaster";
 import {UserFormComponent} from "./user-management/user-form.component";
+import {ControlPanelComponent} from "./control-panel.component";
 
 @NgModule({
     imports: [
@@ -22,7 +23,7 @@ import {UserFormComponent} from "./user-management/user-form.component";
         WidgetModule,
         routing
     ],
-    declarations: [UserManagementComponent, UserSearchComponent, UserFormComponent],
+    declarations: [ControlPanelComponent, UserManagementComponent, UserSearchComponent, UserFormComponent],
     providers: [UserManagementService, EventBroadcaster]
 })
 export class ControlPanelModule {

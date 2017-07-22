@@ -1,16 +1,28 @@
 package ir.framework.infrastructure.dto;
 
-/**
- * Created by Ahmad on 21/06/2017.
- */
-public class UserViewModel {
+import org.hibernate.validator.constraints.Email;
 
+import javax.validation.constraints.NotNull;
+
+/**
+ * Created by Ahmad on 20/07/2017.
+ */
+
+public class RegistrationVM {
     private Long id;
+    @NotNull
     private String login;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
+    @Email
     private String email;
+    @NotNull
     private String password;
+    @NotNull
+    private String passwordRepeat;
 
     public Long getId() {
         return id;
@@ -58,5 +70,13 @@ public class UserViewModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
     }
 }

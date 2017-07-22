@@ -3,6 +3,8 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import {GridQuery, Page} from "../widget/grid/grid-view-config";
 import {Http} from "@angular/http";
+import {Subscription} from "rxjs/Subscription";
+import {NotificationService} from "./notification-service";
 
 export abstract class GenericService<T, PK> {
     public query(gridQuery: GridQuery, params: object): Observable<Page<T>> {
@@ -20,8 +22,15 @@ export abstract class GenericService<T, PK> {
             });
     }
 
-    public create(model: T): Observable<T> {
-        return this.getHttpService().post(this.getResourceUrl(), model).map(r => r.json() as T);
+    public create(model: T): Subscription {
+        return this.getHttpService().post(this.getResourceUrl(), JSON.stringify(model))
+            .subscribe(
+                r => {
+                    this.getNotificationService().success("عملیات با موفقیت انجام شد");
+                    return r.json() as T
+                },
+                e => this.handleError(e)
+            )
     }
 
     public update(model: T): Observable<T> {
@@ -39,4 +48,13 @@ export abstract class GenericService<T, PK> {
     protected abstract getResourceUrl(): string;
 
     protected abstract getHttpService(): Http;
+
+    protected abstract getNotificationService(): NotificationService;
+
+    protected handleError(e) {
+        let message = e.message || "خطا در انجام عملیات";
+        this.getNotificationService().error(message);
+        return Observable.never;
+    }
+
 }

@@ -1,9 +1,12 @@
 package ir.framework.infrastructure.controller;
 
+import ir.framework.infrastructure.dto.RegistrationVM;
 import ir.framework.infrastructure.dto.UserDTO;
 import ir.framework.infrastructure.dto.UserSearchCriteria;
 import ir.framework.infrastructure.dto.UserViewModel;
+import ir.framework.infrastructure.exception.account.PasswordRepeatNotMatch;
 import ir.framework.infrastructure.model.PersistentToken;
+import ir.framework.infrastructure.model.User;
 import ir.framework.infrastructure.repository.PersistentTokenRepository;
 import ir.framework.infrastructure.repository.UserRepository;
 import ir.framework.infrastructure.service.IUserService;
@@ -18,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,6 +80,14 @@ public class AccountController {
         return new ResponseEntity<>(mapperService.convert(userService.findAll(), UserViewModel.class), HttpStatus.OK);
     }
 
+    @PostMapping("/account")
+    public ResponseEntity<UserViewModel> create(@RequestBody @Valid RegistrationVM model) {
+        User user = mapperService.convert(model, User.class);
+        if (model.getPassword().equals(model.getPasswordRepeat())) {
+            userService.save(user);
+            return new ResponseEntity<>(mapperService.convert(user, UserViewModel.class), HttpStatus.OK);
+        } else throw new PasswordRepeatNotMatch();
+    }
 
     @PostMapping("/account/query")
     public ResponseEntity<List<UserViewModel>> query(@RequestBody UserSearchCriteria searchCriteria) {

@@ -39,7 +39,8 @@
         "../../../node_modules/bootstrap/dist/js/bootstrap.js",
         "../../../node_modules/handsontable/dist/handsontable.full.js",
         "../../../node_modules/chroma-js/chroma.js",
-        "../../../node_modules/chosen-js/chosen.jquery.js"
+        "../../../node_modules/chosen-js/chosen.jquery.js",
+        "../../../node_modules/bootstrap-notify/bootstrap-notify.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

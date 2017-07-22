@@ -17,6 +17,7 @@ import {StateStorageService} from "./shared/auth/state-storage.service";
 import {Ng2Webstorage} from "ng2-webstorage";
 import {httpFactory} from "./shared/intercepted-http-factory";
 import {WidgetModule} from "./widget/widget-module";
+import {NotificationService} from "./shared/notification-service";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -58,6 +59,7 @@ export type StoreType = {
         AuthService,
         Principal,
         StateStorageService,
+        NotificationService,
         {
             provide: Http,
             useFactory: httpFactory,

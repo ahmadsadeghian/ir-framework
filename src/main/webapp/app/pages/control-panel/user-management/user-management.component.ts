@@ -1,5 +1,7 @@
 import {Component, OnInit} from "@angular/core";
+
 import {
+    EventArgs,
     GlobalCommand,
     GridColumn,
     GridCommand,
@@ -9,13 +11,14 @@ import {
 } from "../../../widget/grid/grid-view-config";
 import {UserManagementService} from "./user-management.service";
 import {User} from "./user-model";
+import {Router} from "@angular/router";
 
 @Component({
     templateUrl: './user-management.html',
     providers: [UserManagementService],
 })
 export class UserManagementComponent implements OnInit {
-    constructor(private service: UserManagementService) {
+    constructor(private service: UserManagementService, private router: Router) {
     }
 
     private userGridConfig: GridConfig;
@@ -24,6 +27,8 @@ export class UserManagementComponent implements OnInit {
 
     ngOnInit(): void {
         this.bindUserGrid();
+
+
     }
 
     private bindUserGrid(): void {
@@ -53,8 +58,13 @@ export class UserManagementComponent implements OnInit {
     }
 
 
-    private onGridEvent(eventArgs): void {
-        console.log(eventArgs);
+    private onGridEvent(arg: EventArgs): void {
+
+        switch (arg.eventName) {
+            case 'ADD':
+                this.router.navigate(['/pages/control-panel/user-management/new']);
+                break;
+        }
     }
 
 }
