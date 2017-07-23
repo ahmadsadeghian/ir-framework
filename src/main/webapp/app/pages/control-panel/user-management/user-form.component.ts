@@ -3,13 +3,16 @@ import {User} from "./user-model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserManagementService} from "./user-management.service";
 import {ValidationService} from "../../../shared/validation/validation-service";
+import {Router} from "@angular/router";
 
 @Component({
     templateUrl: './user-form.html',
     providers: [],
 })
 export class UserFormComponent implements OnInit {
-    constructor(private formBuilder: FormBuilder, private userService: UserManagementService) {
+    constructor(private formBuilder: FormBuilder,
+                private userService: UserManagementService,
+                private router: Router) {
     }
 
     private userForm: FormGroup;
@@ -32,9 +35,13 @@ export class UserFormComponent implements OnInit {
         if (this.validationService.isValid()) {
             this.model = this.userForm.value;
             this.userService.create(this.model).add(result => {
-                console.log(result);
+                this.router.navigate(['/pages/control-panel/user-management']);
             });
         }
+    }
+
+    cancel(): void {
+        this.router.navigate(['/pages/control-panel/user-management']);
     }
 
 }

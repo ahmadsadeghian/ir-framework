@@ -62,7 +62,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, UserDTO, Long> imp
     public void save(User model) {
         model.setActivated(true);
         model.setPassword(passwordEncoder.encode(model.getPassword()));
-        model.setAuthorities(Arrays.asList(new Authority("ROLE_USER")).stream().collect(Collectors.toSet()));
+        //model.setAuthorities(Arrays.asList(new Authority("ROLE_USER")).stream().collect(Collectors.toSet()));
         super.save(model);
     }
 }

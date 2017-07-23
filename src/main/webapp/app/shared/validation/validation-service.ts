@@ -31,11 +31,10 @@ export class ValidationService {
 
     public getMessage(fieldName: string) {
         if (this.messages[fieldName]) {
-            let result = '<ul>';
+            let result = '';
             for (let m of this.messages[fieldName]) {
-                result += `<li>${this.messageItems[m]}</li>`;
+                result += this.messageItems[m] + ' ';
             }
-            result += '</ul>';
             return result;
         }
         return '';

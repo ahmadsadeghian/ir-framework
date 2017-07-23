@@ -1,9 +1,12 @@
 package ir.framework.infrastructure.model;
 
 import ir.framework.base.model.AbstractAuditingEntity;
-import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -47,12 +50,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "image_url", length = 256)
     private String imageUrl;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "fw_user_authority",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
-    @BatchSize(size = 20)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Set<Authority> authorities = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")

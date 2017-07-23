@@ -1,110 +1,142 @@
 <div style="direction: rtl">
-    <ba-card title="فرم اطلاعات کاربر">
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <div class="form-group row">
-                <label class="col-sm-2 form-control-label">نام</label>
-                <div class="col-sm-10">
-                    <div [ngClass]="validationService.getInputClass('firstName')">
-                        <input aria-describedby="firstNameStatus"
-                               type="text"
-                               class="form-control"
-                               placeholder="نام"
-                               formControlName="firstName">
-                        <i aria-hidden="true" [ngClass]="validationService.getInputIcon('firstName')"></i>
-                        <span class="sr-only" id="firstNameStatus">(error)</span>
+
+
+    <div class="animated fadeIn card" zoom-in>
+        <div class="card-header clearfix">
+            <button class="btn btn-default pull-left"
+                    (click)="cancel()"
+                    type="button">
+                بازگشت
+                <i class="fa fa-arrow-left"></i>
+            </button>
+            <h3 class="card-title">فرم اطلاعات کاربر</h3>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">نام</label>
+                    <div class="col-sm-10">
+                        <div [ngClass]="validationService.getInputClass('firstName')">
+                            <input aria-describedby="firstNameStatus"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="نام"
+                                   formControlName="firstName"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="{{validationService.getMessage('firstName')}}">
+                            <i aria-hidden="true" [ngClass]="validationService.getInputIcon('firstName')"></i>
+                            <span class="sr-only" id="firstNameStatus">(error)</span>
+
+                            <!--<div *ngIf="validationService.isFieldInvalid('firstName')"
+                                 class="alert alert-danger">
+                                <div [innerHTML]=""></div>
+                            </div>-->
+                        </div>
                     </div>
                 </div>
-                <!--<div *ngIf="validationService.isFieldInvalid('firstName')"
-                     class="alert alert-danger">
-                    <div [innerHTML]="validationService.getMessage('firstName')"></div>
-                </div>-->
-            </div>
 
-            <div class="form-group row">
-                <label class="col-sm-2 form-control-label">نام خانوادگی</label>
-                <div class="col-sm-10">
-                    <div [ngClass]="validationService.getInputClass('lastName')">
-                        <input aria-describedby="lastNameStatus"
-                               type="text"
-                               class="form-control"
-                               placeholder="نام خانوادگی"
-                               formControlName="lastName">
-                        <i aria-hidden="true" [ngClass]="validationService.getInputIcon('lastName')"></i>
-                        <span class="sr-only" id="lastNameStatus">(error)</span>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">نام خانوادگی</label>
+                    <div class="col-sm-10">
+                        <div [ngClass]="validationService.getInputClass('lastName')">
+                            <input aria-describedby="lastNameStatus"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="نام خانوادگی"
+                                   formControlName="lastName"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="{{validationService.getMessage('lastName')}}">
+                            <i aria-hidden="true" [ngClass]="validationService.getInputIcon('lastName')"></i>
+                            <span class="sr-only" id="lastNameStatus">(error)</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 form-control-label">نام کاربری</label>
-                <div class="col-sm-10">
-                    <div [ngClass]="validationService.getInputClass('login')">
-                        <input aria-describedby="loginStatus"
-                               type="text"
-                               class="form-control"
-                               placeholder="نام کاربری"
-                               formControlName="login">
-                        <i aria-hidden="true" [ngClass]="validationService.getInputIcon('login')"></i>
-                        <span class="sr-only" id="loginStatus">(error)</span>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">نام کاربری</label>
+                    <div class="col-sm-10">
+                        <div [ngClass]="validationService.getInputClass('login')">
+                            <input aria-describedby="loginStatus"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="نام کاربری"
+                                   formControlName="login"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="{{validationService.getMessage('login')}}">
+                            <i aria-hidden="true" [ngClass]="validationService.getInputIcon('login')"></i>
+                            <span class="sr-only" id="loginStatus">(error)</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <label class="col-sm-2 form-control-label">رمز عبور</label>
-                <div class="col-sm-10">
-                    <div [ngClass]="validationService.getInputClass('password')">
-                        <input aria-describedby="passwordStatus"
-                               type="text"
-                               class="form-control"
-                               placeholder="رمز عبور"
-                               formControlName="password">
-                        <i aria-hidden="true" [ngClass]="validationService.getInputIcon('password')"></i>
-                        <span class="sr-only" id="passwordStatus">(error)</span>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">رمز عبور</label>
+                    <div class="col-sm-10">
+                        <div [ngClass]="validationService.getInputClass('password')">
+                            <input aria-describedby="passwordStatus"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="رمز عبور"
+                                   formControlName="password"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="{{validationService.getMessage('password')}}">
+                            <i aria-hidden="true" [ngClass]="validationService.getInputIcon('password')"></i>
+                            <span class="sr-only" id="passwordStatus">(error)</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <label class="col-sm-2 form-control-label">تکرار رمز عبور</label>
-                <div class="col-sm-10">
-                    <div [ngClass]="validationService.getInputClass('passwordRepeat')">
-                        <input aria-describedby="passwordRepeatStatus"
-                               type="text"
-                               class="form-control"
-                               placeholder="تکرار رمز عبور"
-                               formControlName="passwordRepeat">
-                        <i aria-hidden="true" [ngClass]="validationService.getInputIcon('passwordRepeat')"></i>
-                        <span class="sr-only" id="passwordRepeatStatus">(error)</span>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">تکرار رمز عبور</label>
+                    <div class="col-sm-10">
+                        <div [ngClass]="validationService.getInputClass('passwordRepeat')">
+                            <input aria-describedby="passwordRepeatStatus"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="تکرار رمز عبور"
+                                   formControlName="passwordRepeat"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="{{validationService.getMessage('passwordRepeat')}}">
+                            <i aria-hidden="true" [ngClass]="validationService.getInputIcon('passwordRepeat')"></i>
+                            <span class="sr-only" id="passwordRepeatStatus">(error)</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <label class="col-sm-2 form-control-label">پست الکترونیکی</label>
-                <div class="col-sm-10">
-                    <div [ngClass]="validationService.getInputClass('email')">
-                        <input aria-describedby="emailStatus"
-                               type="text"
-                               class="form-control"
-                               placeholder="پست الکترونیکی"
-                               formControlName="email">
-                        <i aria-hidden="true" [ngClass]="validationService.getInputIcon('email')"></i>
-                        <span class="sr-only" id="emailStatus">(error)</span>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">پست الکترونیکی</label>
+                    <div class="col-sm-10">
+                        <div [ngClass]="validationService.getInputClass('email')">
+                            <input aria-describedby="emailStatus"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="پست الکترونیکی"
+                                   formControlName="email"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="{{validationService.getMessage('email')}}">
+                            <i aria-hidden="true" [ngClass]="validationService.getInputIcon('email')"></i>
+                            <span class="sr-only" id="emailStatus">(error)</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-            <div class="form-group row">
-                <div class="offset-sm-2 col-sm-10">
-                    <button type="submit" [disabled]="!validationService.isValid()"
-                            class="btn btn-success">ثبت نام
-                    </button>
+                <div class="form-group row pull-left">
+                    <div class="offset-sm-2 col-sm-10">
+                        <button type="submit"
+                                [disabled]="!validationService.isValid()"
+                                class="btn btn-success">ثبت نام
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-        </form>
+            </form>
+        </div>
+    </div>
 
-
-    </ba-card>
 </div>
