@@ -3,25 +3,24 @@ import * as configs from "./grid-view-config";
 import {EventArgs} from "./grid-view-config";
 import {GridViewService} from "./grid-view.service";
 import {GenericService} from "../../shared/generic-service";
-import {Observable} from "rxjs/Observable";
 import {EventBroadcaster} from "./grid-event-broadcaster";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'fw-grid-view',
     templateUrl: './grid-view.html',
-    providers: [GridViewService]
+    providers: [GridViewService],
 })
 export class GridViewComponent implements OnInit {
     constructor(private gridViewService: GridViewService,
-                private eventBroadcaster: EventBroadcaster) {
+                private eventBroadcaster: EventBroadcaster<any>,
+                private router: Router) {
     }
-
-    private userStatus: Observable<any[]>;
 
     @Input() config: configs.GridConfig;
     @Input() crudService: GenericService<any, any>;
     @Input() filter: object;
-    @Output() eventHandler = new EventEmitter<configs.EventArgs>();
+    @Output() eventHandler = new EventEmitter<configs.EventArgs<any>>();
 
     private reversedColumns: configs.GridColumn[] = [];
     private rowCommands: configs.GridCommand[] = [];
@@ -54,7 +53,7 @@ export class GridViewComponent implements OnInit {
     }
 
     private handleBroadcast(): void {
-        this.eventBroadcaster.subscribe((e: EventArgs) => {
+        this.eventBroadcaster.subscribe((e: EventArgs<any>) => {
             if (e.eventName == 'rebind') {
                 this.filter = e.arg;
                 this.bind();
@@ -94,11 +93,15 @@ export class GridViewComponent implements OnInit {
     }
 
     private handleCommand(command: configs.GridCommand, item: any): void {
-        this.eventHandler.emit(new configs.EventArgs(command.name, item));
+        let eventArg = new configs.EventArgs(item);
+        command.callback(eventArg);
+        this.eventHandler.emit(eventArg);
     }
 
     private handleGlobalCommand(command: configs.GridCommand): void {
-        this.eventHandler.emit(new configs.EventArgs(command.name, null));
+        let eventArg = new configs.EventArgs();
+        command.callback(eventArg);
+        this.eventHandler.emit(eventArg);
     }
 
     private setPageSize(pageSize: number): void {

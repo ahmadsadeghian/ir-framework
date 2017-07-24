@@ -1,5 +1,7 @@
 package ir.framework.infrastructure.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Created by Ahmad on 21/06/2017.
  */
@@ -10,6 +12,7 @@ public class UserViewModel {
     private String firstName;
     private String lastName;
     private String email;
+    @JsonIgnore
     private String password;
 
     public Long getId() {

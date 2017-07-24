@@ -27,18 +27,18 @@ export class RowIndexColumn extends GridColumn {
 }
 
 export class GridCommand {
-    constructor(public name: string,
-                public title: string = name,
+    constructor(public title: string = name,
                 public icon: string = '',
+                public callback: ((e) => void),
                 public isGlobal: boolean = false) {
     }
 }
 
 export class GlobalCommand extends GridCommand {
-    constructor(public name: string,
-                public title: string = name,
-                public icon: string = '') {
-        super(name, title, icon, true);
+    constructor(public title: string = name,
+                public icon: string = '',
+                public callback: ((e) => void)) {
+        super(title, icon, callback, true);
     }
 }
 
@@ -63,8 +63,8 @@ export class GridQuery {
     }
 }
 
-export class EventArgs {
-    constructor(public eventName: string, public arg: object) {
+export class EventArgs<T> {
+    constructor(public arg: T = null, public eventName: string = '') {
     }
 }
 

@@ -10,6 +10,7 @@ import ir.framework.infrastructure.model.User;
 import ir.framework.infrastructure.repository.PersistentTokenRepository;
 import ir.framework.infrastructure.repository.UserRepository;
 import ir.framework.infrastructure.service.IUserService;
+import ir.framework.infrastructure.service.UserServiceImpl;
 import ir.framework.infrastructure.utils.MapperService;
 import ir.framework.infrastructure.utils.SecurityUtils;
 import org.slf4j.Logger;
@@ -67,13 +68,17 @@ public class AccountController {
      *
      * @return the ResponseEntity with status 200 (OK) and the current user in body, or status 500 (Internal Server Error) if the user couldn't be returned
      */
-    @GetMapping("/account")
+    @GetMapping("/account/check")
     public ResponseEntity<UserDTO> getAccount() {
         return Optional.ofNullable(userService.getUserWithAuthorities())
                 .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
+    @GetMapping("/account/{id}")
+    public ResponseEntity<UserViewModel> find(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(mapperService.convert(userService.find(id), UserViewModel.class), HttpStatus.OK);
+    }
 
     @GetMapping("/account/list")
     public ResponseEntity<List<UserViewModel>> list() {

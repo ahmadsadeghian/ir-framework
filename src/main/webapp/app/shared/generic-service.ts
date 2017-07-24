@@ -42,7 +42,7 @@ export abstract class GenericService<T, PK> {
     }
 
     public find(id: PK): Observable<T> {
-        return this.getHttpService().get(`${this.getResourceUrl()}/${id}`).map(r => r.json());
+        return this.getHttpService().get(`${this.getResourceUrl()}/${id}`).map(r => r.json() as T);
     }
 
     protected abstract getResourceUrl(): string;

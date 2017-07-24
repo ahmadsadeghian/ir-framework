@@ -3,7 +3,8 @@ import {User} from "./user-model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserManagementService} from "./user-management.service";
 import {ValidationService} from "../../../shared/validation/validation-service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import "rxjs/add/operator/switchMap";
 
 @Component({
     templateUrl: './user-form.html',
@@ -12,7 +13,8 @@ import {Router} from "@angular/router";
 export class UserFormComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private userService: UserManagementService,
-                private router: Router) {
+                private router: Router,
+                private activatedRoute: ActivatedRoute) {
     }
 
     private userForm: FormGroup;
@@ -29,6 +31,9 @@ export class UserFormComponent implements OnInit {
             'passwordRepeat': [this.model.passwordRepeat, Validators.required]
         });
         this.validationService = new ValidationService(this.userForm);
+        this.activatedRoute.params
+            .switchMap((params: Params) => this.userService.find(+params['id']))
+            .subscribe((user: User) => this.userForm.patchValue(user));
     }
 
     onSubmit(): void {

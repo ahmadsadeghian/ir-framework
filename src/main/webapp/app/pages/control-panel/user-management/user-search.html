@@ -1,50 +1,53 @@
-<form class="row form-inline"
-      [formGroup]="userSearchForm"
-      (ngSubmit)="onSearchUser()">
-    <div class="form-group col-md-4">
-        <input type="text"
-               class="form-control"
-               placeholder="نام"
-               formControlName="firstName">
-    </div>
-    <div class="form-group col-md-4">
-        <input type="text"
-               class="form-control"
-               placeholder="نام خانوادگی"
-               formControlName="lastName">
-    </div>
-    <div class="form-group col-md-4">
-        <input type="text"
-               class="form-control"
-               placeholder="نام کاربری"
-               formControlName="login">
-    </div>
-    <div class="form-group col-md-4">
-        <input type="email"
-               class="form-control"
-               placeholder="پست الکترونیکی"
-               formControlName="email">
-    </div>
-    <div class="col-md-4">
-        <fw-chosen
-                formControlName="isOnline"
-                [items]="userStatusList"
-                [placeHolder]="'وضعیت کاربر'"
-                [dataValueField]="'value'"
-                [dataTextField]="'label'"></fw-chosen>
+<form [formGroup]="userSearchForm" (ngSubmit)="onSearchUser()">
+
+    <div class="form-group row">
+        <label class="col-md-2 form-control-label">نام</label>
+        <div class="form-group col-md-4">
+            <input type="text"
+                   class="form-control"
+                   placeholder="نام"
+                   formControlName="firstName">
+        </div>
+        <label class="col-md-2 form-control-label">نام خانوادگی</label>
+        <div class="form-group col-md-4">
+            <input type="text"
+                   class="form-control"
+                   placeholder="نام خانوادگی"
+                   formControlName="lastName">
+        </div>
     </div>
 
+    <div class="form-group row">
+        <label class="col-md-2 form-control-label">پست الکترونیکی</label>
+        <div class="form-group col-md-4">
+            <input type="email"
+                   class="form-control"
+                   placeholder="پست الکترونیکی"
+                   formControlName="email">
+        </div>
+        <label class="col-md-2 form-control-label">نام کاربری</label>
+        <div class="form-group col-md-4">
+            <input type="text"
+                   class="form-control"
+                   placeholder="نام کاربری"
+                   formControlName="login">
+        </div>
 
-    <div class=" col-md-4 text-center ">
-        <button type="submit" style="width: 150px;"
-                class="btn btn-info">اعمال فیلتر
-            <span class="fa fa-filter"></span>
-        </button>
-        <button type="button" style="width: 150px;"
-                (click)="userSearchForm.reset()"
-                class="btn btn-default">حذف فیلترها
-            <span class="fa fa-remove"></span>
-        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class=" col-md-4 text-center ">
+            <button type="submit" style="width: 150px;"
+                    class="btn btn-info">اعمال فیلتر
+                <span class="fa fa-filter"></span>
+            </button>
+            <button type="button" style="width: 150px;"
+                    (click)="userSearchForm.reset()"
+                    class="btn btn-default">حذف فیلترها
+                <span class="fa fa-remove"></span>
+            </button>
+        </div>
     </div>
 
 </form>

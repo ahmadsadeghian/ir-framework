@@ -22,13 +22,10 @@ export class UserManagementComponent implements OnInit {
     }
 
     private userGridConfig: GridConfig;
-
     private searchFilter: User = new User();
 
     ngOnInit(): void {
         this.bindUserGrid();
-
-
     }
 
     private bindUserGrid(): void {
@@ -41,30 +38,31 @@ export class UserManagementComponent implements OnInit {
                 new GridColumn('email', 'پست الکترونیکی', '200px')
             ],
             [
-                new GlobalCommand('ADD', 'جدید', 'fa fa-plus'),
-                new GridCommand('EDIT', 'ویرایش', 'fa fa-edit'),
-                new GridCommand('DELETE', 'حذف', 'fa fa-remove'),
-                new GridCommand('RESET_PASSWORD', 'تغییر کلمه عبور', 'fa fa-key'),
-                new GridCommand('ORGANIZATIONS', 'انتساب به سازمان', 'fa fa-globe'),
-                new GridCommand('GROUPS', 'انتساب گروههای کاربری', 'fa fa-users'),
-                new GridCommand('LOCK', 'قفل کردن', 'fa fa-lock'),
-                new GridCommand('UNLOCK', 'باز کردن قفل', 'fa fa-unlock'),
-                new GridCommand('ACTIVATE', 'فعال سازی', 'fa fa-check'),
-                new GridCommand('DEACTIVATE', 'غیر فعال سازی', 'fa fa-ban'),
-                new GridCommand('LOGOUT', 'اخراج', 'fa fa-sign-out'),
-                new GridCommand('RESTRICTIONS', 'اعمال محدودیت', 'fa fa-exclamation'),
+                new GlobalCommand('جدید', 'fa fa-plus', this.add.bind(this)),
+                new GridCommand('ویرایش', 'fa fa-edit', this.edit.bind(this)),
+                new GridCommand('حذف', 'fa fa-remove', this.test.bind(this)),
+                new GridCommand('تغییر کلمه عبور', 'fa fa-key', this.test.bind(this)),
+                new GridCommand('انتساب به سازمان', 'fa fa-globe', this.test.bind(this)),
+                new GridCommand('انتساب گروههای کاربری', 'fa fa-users', this.test.bind(this)),
+                new GridCommand('قفل کردن', 'fa fa-lock', this.test.bind(this)),
+                new GridCommand('باز کردن قفل', 'fa fa-unlock', this.test.bind(this)),
+                new GridCommand('فعال سازی', 'fa fa-check', this.test.bind(this)),
+                new GridCommand('غیر فعال سازی', 'fa fa-ban', this.test.bind(this)),
+                new GridCommand('اخراج', 'fa fa-sign-out', this.test.bind(this)),
+                new GridCommand('اعمال محدودیت', 'fa fa-exclamation', this.test.bind(this)),
             ],
             GridSelectMode.Single);
     }
 
-
-    private onGridEvent(arg: EventArgs): void {
-
-        switch (arg.eventName) {
-            case 'ADD':
-                this.router.navigate(['/pages/control-panel/user-management/new']);
-                break;
-        }
+    private test(arg: EventArgs<User>): void {
+        this.router.navigate(['/pages/control-panel/user-management/user']);
     }
 
+    private add() {
+        this.router.navigate(['/pages/control-panel/user-management/user']);
+    }
+
+    private edit(e: EventArgs<User>) {
+        this.router.navigate([`/pages/control-panel/user-management/user/${e.arg.id}`]);
+    }
 }

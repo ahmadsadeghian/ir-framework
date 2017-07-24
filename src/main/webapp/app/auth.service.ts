@@ -14,7 +14,7 @@ export class AuthService {
     }
 
     get(): Observable<any> {
-        return this.http.get('api/account').map((res: Response) => res.json());
+        return this.http.get('api/account/check').map((res: Response) => res.json());
     }
 
     login(username: string, password: string): Promise<any> {

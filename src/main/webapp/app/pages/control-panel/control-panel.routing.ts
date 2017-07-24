@@ -14,7 +14,11 @@ export const routes: Routes = [
             component: UserManagementComponent,
             data: {authorities: ['ROLE_ADMIN']}
         }, {
-            path: 'user-management/new',
+            path: 'user-management/user',
+            component: UserFormComponent,
+            data: {authorities: ['ROLE_ADMIN']}
+        }, {
+            path: 'user-management/user/:id',
             component: UserFormComponent,
             data: {authorities: ['ROLE_ADMIN']}
         }]
