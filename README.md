@@ -12,19 +12,17 @@ In order to run project do following steps:
 3. install latest version of Postgresql database.
 4. install git
 5. clone project in a directory:
-    > mkdir irframework-project
-    > cd irframework-project
-    > git clone https://github.com/ahmadsadeghian/ir-framework.git
+
+   git clone https://github.com/ahmadsadeghian/ir-framework.git
 6. run following node command:
-    > npm install
+   npm install
 7. create database ng2boot (configuration of database connection exists in src/main/resources/application.properties)
-8. run following maven command:
-    > mvn spring-boot:run
-    this command will open port 8080 to serve application.
+8. run following maven command (this command will open port 8080 to serve application):
+   mvn spring-boot:run
 9. after starting embedded tomcat, run script.sql in your database  
 10. open browser, type this in the address bar: localhost:8080
 11. in order to live reload of typescript codes, run following node command:
-    > ng build --watch
+   ng build --watch
 11. enjoy the app :-)
 
 We are happy to be involved with you.
