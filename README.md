@@ -20,9 +20,10 @@ In order to run project do following steps:
 8. run following maven command (this command will open port 8080 to serve application):
    mvn spring-boot:run
 9. after starting embedded tomcat, run script.sql in your database  
-10. open browser, type this in the address bar: localhost:8080
-11. in order to live reload of typescript codes, run following node command:
+10. open browser, type this in the address bar: localhost:8080.
+11. login with user: admin password: 1
+12. in order to live reload of typescript codes, run following node command:
    ng build --watch
-11. enjoy the app :-)
+13. enjoy the app :-)
 
 We are happy to be involved with you.
