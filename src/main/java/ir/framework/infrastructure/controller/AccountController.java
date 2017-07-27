@@ -1,16 +1,12 @@
 package ir.framework.infrastructure.controller;
 
-import ir.framework.infrastructure.dto.RegistrationVM;
-import ir.framework.infrastructure.dto.UserDTO;
-import ir.framework.infrastructure.dto.UserSearchCriteria;
-import ir.framework.infrastructure.dto.UserViewModel;
+import ir.framework.infrastructure.dto.*;
 import ir.framework.infrastructure.exception.account.PasswordRepeatNotMatch;
 import ir.framework.infrastructure.model.PersistentToken;
 import ir.framework.infrastructure.model.User;
 import ir.framework.infrastructure.repository.PersistentTokenRepository;
-import ir.framework.infrastructure.repository.UserRepository;
+import ir.framework.infrastructure.repository.IUserRepository;
 import ir.framework.infrastructure.service.IUserService;
-import ir.framework.infrastructure.service.UserServiceImpl;
 import ir.framework.infrastructure.utils.MapperService;
 import ir.framework.infrastructure.utils.SecurityUtils;
 import org.slf4j.Logger;
@@ -40,7 +36,7 @@ public class AccountController {
     private final Logger log = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
 
     @Autowired
     private IUserService userService;
@@ -92,6 +88,12 @@ public class AccountController {
             userService.save(user);
             return new ResponseEntity<>(mapperService.convert(user, UserViewModel.class), HttpStatus.OK);
         } else throw new PasswordRepeatNotMatch();
+    }
+
+    @PutMapping("/account")
+    public ResponseEntity<UserViewModel> update(@RequestBody @Valid UpdateUserVM model) {
+        userService.update(model);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/account/query")

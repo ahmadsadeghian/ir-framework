@@ -1,7 +1,7 @@
 package ir.framework.config.security;
 
 import ir.framework.infrastructure.model.User;
-import ir.framework.infrastructure.repository.UserRepository;
+import ir.framework.infrastructure.repository.IUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -23,16 +22,16 @@ public class UserDetailService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(UserDetailService.class);
 
-    private final UserRepository userRepository;
+    private final IUserRepository IUserRepository;
 
-    public UserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailService(IUserRepository IUserRepository) {
+        this.IUserRepository = IUserRepository;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
-        Optional<User> userFromDatabase = userRepository.findOneByLogin(login);
+        Optional<User> userFromDatabase = IUserRepository.findOneByLogin(login);
         return userFromDatabase.
                 map(user ->
                         new org.springframework.security.core.userdetails.User(

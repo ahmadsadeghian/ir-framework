@@ -59,10 +59,10 @@ export class UserManagementComponent implements OnInit {
     }
 
     private add() {
-        this.router.navigate(['/pages/control-panel/user-management/user']);
+        this.router.navigate(['/pages/control-panel/user-management/create']);
     }
 
     private edit(e: EventArgs<User>) {
-        this.router.navigate([`/pages/control-panel/user-management/user/${e.arg.id}`]);
+        this.router.navigate([`/pages/control-panel/user-management/update/${e.arg.id}`]);
     }
 }

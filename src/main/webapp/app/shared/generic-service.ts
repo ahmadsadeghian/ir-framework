@@ -33,8 +33,15 @@ export abstract class GenericService<T, PK> {
             )
     }
 
-    public update(model: T): Observable<T> {
-        return this.getHttpService().put(this.getResourceUrl(), model).map(r => r.json() as T);
+    public update(model: T): Subscription {
+        return this.getHttpService().put(this.getResourceUrl(), JSON.stringify(model))
+            .subscribe(
+                r => {
+                    this.getNotificationService().success("عملیات با موفقیت انجام شد");
+                    return r.json() as T
+                },
+                e => this.handleError(e)
+            )
     }
 
     public delete(id: PK): Observable<boolean> {

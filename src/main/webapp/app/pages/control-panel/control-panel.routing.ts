@@ -1,9 +1,9 @@
 import {RouterModule, Routes} from "@angular/router";
-
 import {ModuleWithProviders} from "@angular/core";
 import {UserManagementComponent} from "./user-management/user-management.component";
-import {UserFormComponent} from "./user-management/user-form.component";
 import {ControlPanelComponent} from "./control-panel.component";
+import {CreateUserComponent} from "./user-management/create-user.component";
+import {UpdateUserComponent} from "./user-management/update-user.component";
 
 export const routes: Routes = [
     {
@@ -14,12 +14,12 @@ export const routes: Routes = [
             component: UserManagementComponent,
             data: {authorities: ['ROLE_ADMIN']}
         }, {
-            path: 'user-management/user',
-            component: UserFormComponent,
+            path: 'user-management/create',
+            component: CreateUserComponent,
             data: {authorities: ['ROLE_ADMIN']}
         }, {
-            path: 'user-management/user/:id',
-            component: UserFormComponent,
+            path: 'user-management/update/:id',
+            component: UpdateUserComponent,
             data: {authorities: ['ROLE_ADMIN']}
         }]
     }

@@ -3,12 +3,11 @@ package ir.framework.infrastructure.service;
 import com.querydsl.core.BooleanBuilder;
 import ir.framework.base.repository.IGenericRepository;
 import ir.framework.base.service.GenericServiceImpl;
-import ir.framework.infrastructure.dto.UserDTO;
+import ir.framework.infrastructure.dto.UpdateUserVM;
 import ir.framework.infrastructure.dto.UserSearchCriteria;
-import ir.framework.infrastructure.model.Authority;
 import ir.framework.infrastructure.model.QUser;
 import ir.framework.infrastructure.model.User;
-import ir.framework.infrastructure.repository.UserRepository;
+import ir.framework.infrastructure.repository.IUserRepository;
 import ir.framework.infrastructure.utils.FieldUtil;
 import ir.framework.infrastructure.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,28 +17,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 /**
  * Created by Ahmad on 01/06/2017.
  */
 
 @Service
-public class UserServiceImpl extends GenericServiceImpl<User, UserDTO, Long> implements IUserService {
+public class UserServiceImpl extends GenericServiceImpl<User, UpdateUserVM, Long> implements IUserService {
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository IUserRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public IGenericRepository<User, Long> getRepositoryBean() {
-        return userRepository;
+        return IUserRepository;
     }
 
     public User getUserWithAuthorities() {
-        return userRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
+        return IUserRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
     }
 
     @Override
@@ -54,7 +50,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, UserDTO, Long> imp
             booleanBuilder.and(user.email.eq(searchCriteria.getEmail()));
         if (FieldUtil.isNotNullOrEmpty(searchCriteria.getLogin()))
             booleanBuilder.and(user.login.like("%" + searchCriteria.getLogin() + "%"));
-        return userRepository.findAll(booleanBuilder, pageable);
+        return IUserRepository.findAll(booleanBuilder, pageable);
     }
 
     @Override
@@ -64,5 +60,11 @@ public class UserServiceImpl extends GenericServiceImpl<User, UserDTO, Long> imp
         model.setPassword(passwordEncoder.encode(model.getPassword()));
         //model.setAuthorities(Arrays.asList(new Authority("ROLE_USER")).stream().collect(Collectors.toSet()));
         super.save(model);
+    }
+
+    @Override
+    @Transactional
+    public void update(UpdateUserVM dto) {
+
     }
 }

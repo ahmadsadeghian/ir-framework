@@ -7,10 +7,10 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import "rxjs/add/operator/switchMap";
 
 @Component({
-    templateUrl: './user-form.html',
+    templateUrl: './create-user.html',
     providers: [],
 })
-export class UserFormComponent implements OnInit {
+export class CreateUserComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private userService: UserManagementService,
                 private router: Router,
@@ -33,7 +33,10 @@ export class UserFormComponent implements OnInit {
         this.validationService = new ValidationService(this.userForm);
         this.activatedRoute.params
             .switchMap((params: Params) => this.userService.find(+params['id']))
-            .subscribe((user: User) => this.userForm.patchValue(user));
+            .subscribe((user: User) => {
+                this.userForm.patchValue(user);
+                this.model = user;
+            });
     }
 
     onSubmit(): void {
