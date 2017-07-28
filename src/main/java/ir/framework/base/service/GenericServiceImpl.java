@@ -1,7 +1,5 @@
 package ir.framework.base.service;
 
-import com.querydsl.core.types.Predicate;
-import ir.framework.base.dto.GenericDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,15 +11,11 @@ import java.util.stream.StreamSupport;
 /**
  * Created by Ahmad on 02/06/2017.
  */
-public abstract class GenericServiceImpl<T, DTO extends GenericDto, ID extends Serializable> implements IGenericService<T, DTO, ID> {
+public abstract class GenericServiceImpl<T, ID extends Serializable>
+        implements IGenericService<T, ID> {
     @Override
     public void save(T model) {
         getRepositoryBean().save(model);
-    }
-
-    @Override
-    public void update(DTO dto) {
-        throw new RuntimeException("Update Method Is Not Implemented!");
     }
 
     @Override
@@ -44,18 +38,6 @@ public abstract class GenericServiceImpl<T, DTO extends GenericDto, ID extends S
     @Override
     public Page<T> findAll(Pageable pageable) {
         return getRepositoryBean().findAll(pageable);
-    }
-
-    @Override
-    public List<T> findAll(Predicate predicate) {
-        return StreamSupport.stream(
-                getRepositoryBean().findAll(predicate).spliterator(), false).
-                collect(Collectors.toList());
-    }
-
-    @Override
-    public Page<T> findAll(Predicate predicate, Pageable pageable) {
-        return getRepositoryBean().findAll(predicate, pageable);
     }
 
 }

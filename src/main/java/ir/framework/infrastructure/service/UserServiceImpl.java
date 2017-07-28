@@ -1,13 +1,13 @@
 package ir.framework.infrastructure.service;
 
 import com.querydsl.core.BooleanBuilder;
-import ir.framework.base.repository.IGenericRepository;
+import ir.framework.base.repository.GenericRepository;
 import ir.framework.base.service.GenericServiceImpl;
 import ir.framework.infrastructure.dto.UpdateUserVM;
 import ir.framework.infrastructure.dto.UserSearchCriteria;
 import ir.framework.infrastructure.model.QUser;
 import ir.framework.infrastructure.model.User;
-import ir.framework.infrastructure.repository.IUserRepository;
+import ir.framework.infrastructure.repository.UserRepository;
 import ir.framework.infrastructure.utils.FieldUtil;
 import ir.framework.infrastructure.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,35 +22,19 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service
-public class UserServiceImpl extends GenericServiceImpl<User, UpdateUserVM, Long> implements IUserService {
+public class UserServiceImpl extends GenericServiceImpl<User, Long> implements IUserService {
     @Autowired
-    private IUserRepository IUserRepository;
-
+    private UserRepository repository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Override
-    public IGenericRepository<User, Long> getRepositoryBean() {
-        return IUserRepository;
-    }
-
     public User getUserWithAuthorities() {
-        return IUserRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
+        return repository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
     }
 
     @Override
     public Page<User> findAll(UserSearchCriteria searchCriteria, Pageable pageable) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        QUser user = QUser.user;
-        if (FieldUtil.isNotNullOrEmpty(searchCriteria.getFirstName()))
-            booleanBuilder.and(user.firstName.like("%" + searchCriteria.getFirstName() + "%"));
-        if (FieldUtil.isNotNullOrEmpty(searchCriteria.getLastName()))
-            booleanBuilder.and(user.lastName.like("%" + searchCriteria.getLastName() + "%"));
-        if (FieldUtil.isNotNullOrEmpty(searchCriteria.getEmail()))
-            booleanBuilder.and(user.email.eq(searchCriteria.getEmail()));
-        if (FieldUtil.isNotNullOrEmpty(searchCriteria.getLogin()))
-            booleanBuilder.and(user.login.like("%" + searchCriteria.getLogin() + "%"));
-        return IUserRepository.findAll(booleanBuilder, pageable);
+        return repository.findAll(searchCriteria, pageable);
     }
 
     @Override
@@ -65,6 +49,13 @@ public class UserServiceImpl extends GenericServiceImpl<User, UpdateUserVM, Long
     @Override
     @Transactional
     public void update(UpdateUserVM dto) {
-
+        repository.update(dto);
     }
+
+
+    @Override
+    public GenericRepository<User, Long> getRepositoryBean() {
+        return repository;
+    }
+
 }

@@ -5,7 +5,7 @@ import ir.framework.infrastructure.exception.account.PasswordRepeatNotMatch;
 import ir.framework.infrastructure.model.PersistentToken;
 import ir.framework.infrastructure.model.User;
 import ir.framework.infrastructure.repository.PersistentTokenRepository;
-import ir.framework.infrastructure.repository.IUserRepository;
+import ir.framework.infrastructure.repository.UserRepository;
 import ir.framework.infrastructure.service.IUserService;
 import ir.framework.infrastructure.utils.MapperService;
 import ir.framework.infrastructure.utils.SecurityUtils;
@@ -36,7 +36,7 @@ public class AccountController {
     private final Logger log = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private IUserService userService;

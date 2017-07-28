@@ -20,6 +20,7 @@ export class UpdateUserComponent implements OnInit {
     private userForm: FormGroup;
     private validationService: ValidationService;
     private model: User = new User();
+    private id: number;
 
     ngOnInit(): void {
         this.userForm = this.formBuilder.group({
@@ -31,12 +32,16 @@ export class UpdateUserComponent implements OnInit {
         this.validationService = new ValidationService(this.userForm);
         this.activatedRoute.params
             .switchMap((params: Params) => this.userService.find(+params['id']))
-            .subscribe((user: User) => this.userForm.patchValue(user));
+            .subscribe((user: User) => {
+                this.id = user.id;
+                this.userForm.patchValue(user);
+            });
     }
 
     onSubmit(): void {
         if (this.validationService.isValid()) {
             this.model = this.userForm.value;
+            this.model.id = this.id;
             this.userService.update(this.model).add(result => {
                 this.router.navigate(['/pages/control-panel/user-management']);
             });

@@ -1,19 +1,24 @@
 package ir.framework.base.repository;
 
-import com.querydsl.core.types.Predicate;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
+import javax.persistence.EntityManager;
 import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
- * Created by Ahmad on 02/06/2017.
+ * Created by Ahmad on 28/07/2017.
  */
-@NoRepositoryBean
-public abstract class GenericRepositoryImpl<T, ID extends Serializable> implements IGenericRepository<T, ID> {
+public class GenericRepositoryImpl<T, ID extends Serializable>
+        extends SimpleJpaRepository<T, ID> implements GenericRepository<T, ID> {
+
+    private EntityManager entityManager;
+
+    // There are two constructors to choose from, either can be used.
+    public GenericRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
+        super(domainClass, entityManager);
+
+        // This is the recommended method for accessing inherited class dependencies.
+        this.entityManager = entityManager;
+    }
 
 }

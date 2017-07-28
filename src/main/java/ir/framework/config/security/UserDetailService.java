@@ -1,7 +1,7 @@
 package ir.framework.config.security;
 
 import ir.framework.infrastructure.model.User;
-import ir.framework.infrastructure.repository.IUserRepository;
+import ir.framework.infrastructure.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,9 +22,9 @@ public class UserDetailService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(UserDetailService.class);
 
-    private final IUserRepository IUserRepository;
+    private final UserRepository IUserRepository;
 
-    public UserDetailService(IUserRepository IUserRepository) {
+    public UserDetailService(UserRepository IUserRepository) {
         this.IUserRepository = IUserRepository;
     }
 

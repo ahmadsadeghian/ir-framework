@@ -12,8 +12,6 @@ import javax.validation.constraints.NotNull;
 public class UpdateUserVM extends GenericDto {
     private Long id;
     @NotNull
-    private String login;
-    @NotNull
     private String firstName;
     @NotNull
     private String lastName;
@@ -27,14 +25,6 @@ public class UpdateUserVM extends GenericDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getFirstName() {
