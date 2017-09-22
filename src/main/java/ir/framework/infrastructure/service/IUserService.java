@@ -7,14 +7,13 @@ import ir.framework.infrastructure.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-/**
- * Created by Ahmad on 01/06/2017.
- */
 public interface IUserService extends IGenericService<User, Long> {
-    User getUserWithAuthorities();
+    User findByLogin(String login);
 
     Page<User> findAll(UserSearchCriteria searchCriteria, Pageable pageable);
 
     void update(UpdateUserVM dto);
+
+    void changePassword(Long userId, String password, String passwordRepeat, Boolean resetOnLogin);
 }
 

@@ -5,10 +5,3 @@
 export interface GenericModel<PK> {
 
 }
-
-
-export function PrimaryKey(target: Function, // The prototype of the class
-                                  propertyKey: string | symbol, // The name of the method
-                                  parameterIndex: number) {
-
-}

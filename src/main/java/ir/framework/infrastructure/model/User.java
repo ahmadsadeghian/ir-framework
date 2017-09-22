@@ -1,24 +1,15 @@
 package ir.framework.infrastructure.model;
 
 import ir.framework.base.model.AbstractAuditingEntity;
-import org.hibernate.annotations.*;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Ahmad on 01/06/2017.
- */
 @Entity
 @Table(name = "FW_USER")
 public class User extends AbstractAuditingEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ")
@@ -26,40 +17,30 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_fk")
+    @JoinColumn(name = "PERSON_FK")
     private Person person;
 
     @Column(length = 50, unique = true)
     private String login;
 
-    @Column(name = "password_hash", length = 60)
+    @Column(name = "PASSWORD_HASH", length = 60)
     private String password;
-
-    @Column(name = "first_name", length = 50)
-    private String firstName;
-
-    @Column(name = "last_name", length = 50)
-    private String lastName;
 
     @Column(length = 100, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private boolean activated = false;
+    private Boolean activated;
 
-    @Column(name = "image_url", length = 256)
-    private String imageUrl;
+    @Column(name = "PASSWORD_RESET")
+    private Boolean passwordReset;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "fw_user_authority",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Set<Authority> authorities = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
-    private Set<PersistentToken> persistentTokens = new HashSet<>();
+            name = "FW_USER_ROLE",
+            joinColumns = {@JoinColumn(name = "USER_FK", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_FK", referencedColumnName = "ID")})
+    private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -93,22 +74,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -117,39 +82,27 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.email = email;
     }
 
-    public boolean getActivated() {
+    public Boolean getActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
 
-
-    public String getImageUrl() {
-        return imageUrl;
+    public Boolean getPasswordReset() {
+        return passwordReset;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPasswordReset(Boolean passwordReset) {
+        this.passwordReset = passwordReset;
     }
 
-
-    public Set<Authority> getAuthorities() {
-        return authorities;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
-
-    public Set<PersistentToken> getPersistentTokens() {
-        return persistentTokens;
-    }
-
-    public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
-        this.persistentTokens = persistentTokens;
-    }
-
-
 }

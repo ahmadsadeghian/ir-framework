@@ -1,66 +1,45 @@
 package ir.framework.infrastructure.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
+import javax.persistence.*;
 
-/**
- * An authority (a security role) used by Spring Security.
- */
 @Entity
 @Table(name = "FW_AUTHORITY")
-public class Authority implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class Authority {
     @Id
-    @Column(length = 50)
-    private String name;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTHORITY_SEQ")
+    @SequenceGenerator(sequenceName = "AUTHORITY_SEQ", initialValue = 1, allocationSize = 1, name = "AUTHORITY_SEQ")
+    private Long id;
 
-    public String getName() {
-        return name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ROLE_FK")
+    private Role role;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACTION_FK")
+    private Action action;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Authority(String name) {
-        this.name = name;
+    public Role getRole() {
+        return role;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Authority authority = (Authority) o;
-
-        if (name != null ? !name.equals(authority.name) : authority.name != null) {
-            return false;
-        }
-
-        return true;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    @Override
-    public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+    public Action getAction() {
+        return action;
     }
 
-    @Override
-    public String toString() {
-        return "Authority{" +
-                "name='" + name + '\'' +
-                "}";
+    public void setAction(Action action) {
+        this.action = action;
     }
 }

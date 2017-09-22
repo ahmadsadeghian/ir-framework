@@ -2,8 +2,10 @@ import {Injectable} from "@angular/core";
 
 @Injectable()
 export class NotificationService {
+    static readonly SUCCESS_MESSAGE = "عملیات با موفقیت انجام شد";
+    static readonly ERROR_MESSAGE = "خطا در انجام عملیات";
 
-    public error(message: string): void {
+    public error(message: string = NotificationService.ERROR_MESSAGE): void {
         $.notify({message: message, icon: 'fa fa-remove'}, this.getOptions('danger'));
     }
 
@@ -11,7 +13,7 @@ export class NotificationService {
         $.notify({message: message, icon: 'fa fa-warning'}, this.getOptions('warning'));
     }
 
-    public success(message: string): void {
+    public success(message: string = NotificationService.SUCCESS_MESSAGE): void {
         $.notify({message: message, icon: 'fa fa-check'}, this.getOptions('success'));
     }
 

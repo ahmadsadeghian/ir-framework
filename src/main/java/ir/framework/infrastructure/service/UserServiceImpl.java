@@ -1,15 +1,12 @@
 package ir.framework.infrastructure.service;
 
-import com.querydsl.core.BooleanBuilder;
 import ir.framework.base.repository.GenericRepository;
 import ir.framework.base.service.GenericServiceImpl;
 import ir.framework.infrastructure.dto.UpdateUserVM;
 import ir.framework.infrastructure.dto.UserSearchCriteria;
-import ir.framework.infrastructure.model.QUser;
+import ir.framework.infrastructure.exception.account.PasswordRepeatNotMatch;
 import ir.framework.infrastructure.model.User;
-import ir.framework.infrastructure.repository.UserRepository;
-import ir.framework.infrastructure.utils.FieldUtil;
-import ir.framework.infrastructure.utils.SecurityUtils;
+import ir.framework.infrastructure.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,24 +14,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by Ahmad on 01/06/2017.
- */
-
 @Service
 public class UserServiceImpl extends GenericServiceImpl<User, Long> implements IUserService {
     @Autowired
-    private UserRepository repository;
+    private IUserRepository userRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User getUserWithAuthorities() {
-        return repository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
+    @Override
+    public Page<User> findAll(UserSearchCriteria searchCriteria, Pageable pageable) {
+        return userRepository.findAll(searchCriteria, pageable);
     }
 
     @Override
-    public Page<User> findAll(UserSearchCriteria searchCriteria, Pageable pageable) {
-        return repository.findAll(searchCriteria, pageable);
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 
     @Override
@@ -49,13 +44,20 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements I
     @Override
     @Transactional
     public void update(UpdateUserVM dto) {
-        repository.update(dto);
+        userRepository.update(dto);
     }
 
+    @Override
+    @Transactional
+    public void changePassword(Long userId, String password, String passwordRepeat, Boolean resetOnLogin) {
+        if (!password.equals(passwordRepeat))
+            throw new PasswordRepeatNotMatch();
+        userRepository.changePassword(userId, passwordEncoder.encode(password), resetOnLogin);
+    }
 
     @Override
     public GenericRepository<User, Long> getRepositoryBean() {
-        return repository;
+        return userRepository;
     }
 
 }

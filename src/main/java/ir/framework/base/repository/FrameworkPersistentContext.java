@@ -29,11 +29,4 @@ public class FrameworkPersistentContext {
         }
     }
 
-    protected HibernateQuery hibernateQuery() {
-        return new HibernateQuery(getCurrentSession());
-    }
-
-    protected HibernateUpdateClause updateClause(EntityPath entityPath) {
-        return new HibernateUpdateClause(getCurrentSession(), entityPath);
-    }
 }

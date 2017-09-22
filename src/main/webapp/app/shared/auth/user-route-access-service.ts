@@ -24,10 +24,12 @@ export class UserRouteAccessService implements CanActivate, CanActivateChild {
         if (!authorities || authorities.length === 0) {
             return true;
         }
-
+        console.log(11111)
         return this.authService.get().toPromise().then(account => {
+            console.log(22222)
             return true;
         }).catch(e => {
+                console.log(e)
                 this.stateStorageService.storeUrl(state.url);
                 this.router.navigate(['/login']);
                 return false;

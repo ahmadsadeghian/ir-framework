@@ -15,7 +15,8 @@ export abstract class GenericService<T, PK> {
         for (var key in params) {
             criteria[key] = params[key];
         }
-        return this.getHttpService().post(`${this.getResourceUrl()}/query`, JSON.stringify(criteria))
+        return this.getHttpService()
+            .post(`${this.getResourceUrl()}/query`, JSON.stringify(criteria))
             .map(r => {
                 let j = r.json();
                 return new Page<T>(j.content, j.totalElements)
@@ -23,10 +24,11 @@ export abstract class GenericService<T, PK> {
     }
 
     public create(model: T): Subscription {
-        return this.getHttpService().post(this.getResourceUrl(), JSON.stringify(model))
+        return this.getHttpService()
+            .post(`${this.getResourceUrl()}/save`, JSON.stringify(model))
             .subscribe(
                 r => {
-                    this.getNotificationService().success("عملیات با موفقیت انجام شد");
+                    this.getNotificationService().success();
                     return r.json() as T
                 },
                 e => this.handleError(e)
@@ -34,22 +36,33 @@ export abstract class GenericService<T, PK> {
     }
 
     public update(model: T): Subscription {
-        return this.getHttpService().put(this.getResourceUrl(), JSON.stringify(model))
+        return this.getHttpService()
+            .put(`${this.getResourceUrl()}/update`, JSON.stringify(model))
             .subscribe(
                 r => {
-                    this.getNotificationService().success("عملیات با موفقیت انجام شد");
+                    this.getNotificationService().success();
                     return r.json() as T
                 },
                 e => this.handleError(e)
             )
     }
 
-    public delete(id: PK): Observable<boolean> {
-        return this.getHttpService().delete(this.getResourceUrl(), id).map(r => r.json() as boolean);
+    public delete(id: PK): Subscription {
+        return this.getHttpService()
+            .get(`${this.getResourceUrl()}/delete/${id}`)
+            .subscribe(
+                r => {
+                    this.getNotificationService().success();
+                    return r;
+                },
+                e => this.handleError(e)
+            );
     }
 
     public find(id: PK): Observable<T> {
-        return this.getHttpService().get(`${this.getResourceUrl()}/${id}`).map(r => r.json() as T);
+        return this.getHttpService()
+            .get(`${this.getResourceUrl()}/${id}`)
+            .map(r => r.json() as T);
     }
 
     protected abstract getResourceUrl(): string;
@@ -59,7 +72,7 @@ export abstract class GenericService<T, PK> {
     protected abstract getNotificationService(): NotificationService;
 
     protected handleError(e) {
-        let message = e.message || "خطا در انجام عملیات";
+        let message = e.message || NotificationService.ERROR_MESSAGE;
         this.getNotificationService().error(message);
         return Observable.never;
     }

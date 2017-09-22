@@ -1,0 +1,143 @@
+<div style="direction: rtl">
+
+    <div class="animated fadeIn card" zoom-in>
+        <div class="card-header clearfix">
+            <button class="btn btn-default pull-left" (click)="cancel()" type="button">
+                بازگشت
+                <i class="fa fa-arrow-left"></i>
+            </button>
+            <h3 class="card-title">فرم اطلاعات کاربر</h3>
+        </div>
+        <div class="card-body">
+            <form #form="ngForm">
+
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">نام</label>
+                    <div class="col-sm-8">
+                        <input aria-describedby="firstNameStatus"
+                               type="text"
+                               required
+                               #firstName="ngModel"
+                               class="form-control"
+                               name="firstName"
+                               placeholder="نام"
+                               [(ngModel)]="model.firstName">
+                    </div>
+                    <div class="col-sm-2">
+                        <fw-input-validation [describedBy]="'firstNameStatus'"
+                                             [binding]="firstName">
+                        </fw-input-validation>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">نام خانوادگی</label>
+                    <div class="col-sm-8">
+                        <input aria-describedby="lastNameStatus"
+                               type="text"
+                               required
+                               class="form-control"
+                               #lastName="ngModel"
+                               name="lastName"
+                               placeholder="نام خانوادگی"
+                               [(ngModel)]="model.lastName">
+                    </div>
+                    <div class="col-sm-2">
+                        <fw-input-validation [describedBy]="'lastNameStatus'"
+                                             [binding]="lastName">
+                        </fw-input-validation>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">نام کاربری</label>
+                    <div class="col-sm-8">
+                        <input aria-describedby="loginStatus"
+                               type="text"
+                               required
+                               class="form-control"
+                               #login="ngModel"
+                               name="login"
+                               placeholder="نام کاربری"
+                               [(ngModel)]="model.login">
+                    </div>
+                    <div class="col-sm-2">
+                        <fw-input-validation [describedBy]="'loginStatus'"
+                                             [binding]="login">
+                        </fw-input-validation>
+                    </div>
+                </div>
+
+
+                <div class="form-group row" *ngIf="model.id == null">
+                    <label class="col-sm-2 form-control-label">رمز عبور</label>
+                    <div class="col-sm-8">
+                        <input aria-describedby="passwordStatus"
+                               type="text"
+                               required
+                               class="form-control"
+                               #password="ngModel"
+                               name="password"
+                               placeholder="رمز عبور"
+                               [(ngModel)]="model.password">
+                    </div>
+                    <div class="col-sm-2">
+                        <fw-input-validation [describedBy]="'passwordStatus'"
+                                             [binding]="password">
+                        </fw-input-validation>
+                    </div>
+                </div>
+
+                <div class="form-group row" *ngIf="model.id == null">
+                    <label class="col-sm-2 form-control-label">تکرار رمز عبور</label>
+                    <div class="col-sm-8">
+                        <input aria-describedby="passwordRepeatStatus"
+                               type="text"
+                               required
+                               class="form-control"
+                               #passwordRepeat="ngModel"
+                               name="passwordRepeat"
+                               placeholder="تکرار رمز عبور"
+                               [(ngModel)]="model.passwordRepeat">
+                    </div>
+                    <div class="col-sm-2">
+                        <fw-input-validation [describedBy]="'passwordRepeatStatus'"
+                                             [binding]="passwordRepeat">
+                        </fw-input-validation>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">پست الکترونیکی</label>
+                    <div class="col-sm-8">
+                        <input aria-describedby="emailStatus"
+                               type="text"
+                               class="form-control"
+                               required email
+                               #email="ngModel"
+                               name="email"
+                               placeholder="پست الکترونیکی"
+                               [(ngModel)]="model.email">
+                    </div>
+                    <div class="col-sm-2">
+                        <fw-input-validation [describedBy]="'emailStatus'"
+                                             [binding]="email">
+                        </fw-input-validation>
+                    </div>
+                </div>
+
+                <div class="form-group row pull-left">
+                    <div class="offset-sm-2 col-sm-10">
+                        <button type="submit"
+                                [disabled]="form.invalid"
+                                (click)="onSubmit()"
+                                class="btn btn-success">ثبت نام
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -10,6 +10,7 @@ import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
 import {ChosenComponent} from "./chosen/chosen.component";
 import {FormsModule} from "@angular/forms";
 import {EventBroadcaster} from "./grid/grid-event-broadcaster";
+import {InputValidationComponent} from "./validation/input-validation.component";
 
 
 @NgModule({
@@ -21,8 +22,8 @@ import {EventBroadcaster} from "./grid/grid-event-broadcaster";
         NgbDropdownModule,
         NgbModalModule,
         SlimLoadingBarModule.forRoot()],
-    declarations: [GridViewComponent, ChosenComponent],
-    exports: [GridViewComponent, ChosenComponent],
+    declarations: [GridViewComponent, ChosenComponent, InputValidationComponent],
+    exports: [GridViewComponent, ChosenComponent, InputValidationComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class WidgetModule {

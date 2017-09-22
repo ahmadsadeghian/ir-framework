@@ -1,9 +1,9 @@
-import {GenericModel, PrimaryKey} from "../../../shared/generic-model";
+import {GenericModel} from "../../../shared/generic-model";
 /**
  * Created by reza on 26/06/2017.
  */
 export class User implements GenericModel<number> {
-    constructor(@PrimaryKey public id: number = -1,
+    constructor(public id: number = null,
                 public login?: string,
                 public firstName?: string,
                 public lastName?: string,

@@ -1,28 +1,27 @@
 package ir.framework.base.service;
 
-import com.querydsl.core.types.Predicate;
-import ir.framework.base.dto.GenericDto;
-import ir.framework.base.repository.GenericRepository;
+import com.querydsl.core.BooleanBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Ahmad on 02/06/2017.
- */
 public interface IGenericService<T, ID extends Serializable> {
     void save(T model);
 
-    T find(ID id);
+    void delete(ID pk);
 
-    void remove(ID id);
+    void update(T model);
+
+    T find(ID id);
 
     List<T> findAll();
 
     Page<T> findAll(Pageable pageable);
 
-    GenericRepository<T, ID> getRepositoryBean();
+    List<T> findByExpression(BooleanBuilder expression);
+
+    Page<T> findByExpression(BooleanBuilder expression, Pageable pageable);
 
 }

@@ -1,0 +1,12 @@
+<span aria-hidden="true" [ngClass]="getInputIcon()"></span>
+<span class="sr-only" id="{{describedBy}}">(error)</span>
+
+<button *ngIf="!binding.pristine && binding.errors && binding.errors.required"
+                 class="btn btn-warning" disabled="disabled" type="button">
+    اجباری
+</button>
+
+<button *ngIf="!binding.pristine && binding.errors && binding.errors.email"
+        class="btn btn-warning" disabled="disabled" type="button">
+    ایمیل
+</button>

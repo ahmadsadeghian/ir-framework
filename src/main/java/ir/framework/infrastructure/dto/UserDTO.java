@@ -17,7 +17,6 @@ public class UserDTO extends GenericDto {
 
     private Long id;
 
-    //@Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     private String login;
 
@@ -47,13 +46,6 @@ public class UserDTO extends GenericDto {
     private Set<String> authorities;
 
     public UserDTO() {
-    }
-
-    public UserDTO(User user) {
-        this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
-                user.getEmail(), user.getActivated(), user.getImageUrl(),
-                user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
-                user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()));
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,

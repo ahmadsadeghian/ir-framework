@@ -1,43 +1,54 @@
 package ir.framework.base.service;
 
+import com.querydsl.core.BooleanBuilder;
+import ir.framework.base.repository.GenericRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-/**
- * Created by Ahmad on 02/06/2017.
- */
 public abstract class GenericServiceImpl<T, ID extends Serializable>
         implements IGenericService<T, ID> {
     @Override
     public void save(T model) {
-        getRepositoryBean().save(model);
+        this.getRepositoryBean().save(model);
     }
 
     @Override
     public T find(ID id) {
-        return (T) getRepositoryBean().findOne(id);
+        return (T) this.getRepositoryBean().find(id);
     }
 
     @Override
-    public void remove(ID id) {
-        getRepositoryBean().delete(id);
+    public void delete(ID id) {
+        this.getRepositoryBean().delete(id);
     }
 
     @Override
     public List<T> findAll() {
-        return StreamSupport.stream(
-                getRepositoryBean().findAll().spliterator(), false).
-                collect(Collectors.toList());
+        return this.getRepositoryBean().findAll();
     }
 
     @Override
     public Page<T> findAll(Pageable pageable) {
-        return getRepositoryBean().findAll(pageable);
+        return this.getRepositoryBean().findAll(pageable);
     }
 
+    @Override
+    public void update(T model) {
+        this.getRepositoryBean().update(model);
+    }
+
+    @Override
+    public List<T> findByExpression(BooleanBuilder expression) {
+        return this.getRepositoryBean().findByExpression(expression);
+    }
+
+    @Override
+    public Page<T> findByExpression(BooleanBuilder expression, Pageable pageable) {
+        return this.getRepositoryBean().findByExpression(expression, pageable);
+    }
+
+    protected abstract GenericRepository<T, ID> getRepositoryBean();
 }

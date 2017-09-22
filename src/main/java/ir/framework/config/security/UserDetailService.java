@@ -1,9 +1,10 @@
 package ir.framework.config.security;
 
 import ir.framework.infrastructure.model.User;
-import ir.framework.infrastructure.repository.UserRepository;
+import ir.framework.infrastructure.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 /**
  * Authenticate a user from the database.
@@ -20,23 +20,20 @@ import java.util.Optional;
 @Component("userDetailsService")
 public class UserDetailService implements UserDetailsService {
 
+
     private final Logger log = LoggerFactory.getLogger(UserDetailService.class);
 
-    private final UserRepository IUserRepository;
-
-    public UserDetailService(UserRepository IUserRepository) {
-        this.IUserRepository = IUserRepository;
-    }
+    @Autowired
+    private IUserService userService;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
-        Optional<User> userFromDatabase = IUserRepository.findOneByLogin(login);
-        return userFromDatabase.
-                map(user ->
-                        new org.springframework.security.core.userdetails.User(
-                                login, user.getPassword(), new ArrayList<GrantedAuthority>())).
-                orElseThrow(() ->
-                        new UsernameNotFoundException("User " + login + " was not found in database"));
+        User user = userService.findByLogin(login);
+        if (user != null)
+            return new org.springframework.security.core.userdetails.User(
+                    login, user.getPassword(), new ArrayList<GrantedAuthority>());
+        else
+            throw new UsernameNotFoundException("User " + login + " was not found in database");
     }
 }
